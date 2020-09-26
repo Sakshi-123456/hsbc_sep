@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script>
+function random_function()
+{
+    var a=document.getElementById("input").value;
+    if(a==="INDIA")
+    {
+        var arr=["Maharashtra","Delhi"];
+    }
+    else if(a==="USA")
+    {
+        var arr=["Washington","Texas","New York"];
+    }
+ 
+    var string="";
+ 
+    for(i=0;i<arr.length;i++)
+    {
+        string=string+"<option value="+arr[i]+">"+arr[i]+"</option>";
+    }
+    document.getElementById("output").innerHTML=string;
+}
+</script>
+</head>
+<body>
+<center>
+  <select id="input" onchange="random_function()">
+            <option>select option</option>
+            <option>INDIA</option>
+            <option>USA</option>
+        </select>
+        <div>
+           <select id="output">
+        </div>
+
+</center>
+</body>
+</html>

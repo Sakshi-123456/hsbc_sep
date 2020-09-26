@@ -1,0 +1,90 @@
+<!-- Password having min 4 character and max 8 character -->
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<script type="text/javascript">
+function validate()
+{
+	var v1=document.getElementById("n1").value;
+	var v2=document.getElementById("n2").value;
+	var v3=document.getElementById("n3").value;
+	var v4=document.getElementById("n4").value;
+}
+function generateCaptcha()
+{
+	var v=parseInt((Math.random())*10000);	
+	document.getElementById("result").innerHTML="<input type=text disabled id=nb value="+v+"><input type=button value=refresh onClick=generateCaptcha()><br> enter above no<input type=text id=cc1><input type=button value=validate onclick=captchavalidate()>";
+	
+}
+function captchavalidate()
+{
+	var v1=document.getElementById("nb").value;
+	var v2=document.getElementById("cc1").value;
+	if(v1==v2){
+		document.getElementById("bb").disabled=false;
+	}
+}
+function validatePassword()
+{
+	var v1=document.getElementById("n5").value;
+	var v2=v1.length;
+	if(v2==4)
+		{
+		alert("Your password is weak");
+		}
+	else if(v2>6 && v2<8)
+		{
+		alert("Your password is moderate");
+		}
+	else if(v2>8)
+		{
+		alert("Your password is strong");
+		}
+	else
+		{
+		
+		}
+}
+var s = document.getElementById('s');
+var options = [India,Austrilia];
+
+
+options.forEach(function(element,key) {
+    s[key] = new Option(element,key);
+});
+</script>
+</head>
+<body>
+<p align="center">Registration Page</p>
+<center>
+<form action="RegistrationServlet" method="">
+	Name : <input type=text name=name id="n1" class="nn" placeholder="Your name" required pattern="^[A-Za-z]\w*$"> <br><br>
+	Password : <input type=password name=password id="n2" placeholder="Your password"required pattern=".{4,8}"> <br><br>
+	Email : <input type=email name=email id="n3"placeholder="Your email" required> <br><br>
+	Phone number : <input type=phone name=phone id="n5" placeholder="Your Phone number"required pattern="[0-9]{10}"> <br><br>
+	Address : <input type=text name=address id="n4" required  placeholder="Your Address" onBlur="generateCaptcha()"> <br><br>
+	Please select country<select id="country" name="country">
+	Please select country
+	  <option>India</option>
+     <option>Australia</option>
+	</select><br><br>
+    Please select state<select name="state" id="state">
+     <option>Delhi</option>
+     <option>Mumbai</option>
+     <option>Mitchell</option>
+     <option>Euroa</option>
+    Please select state</select><br>
+	<br>
+	<br>
+	<div id="result"></div>
+	
+	<input type=submit value=Register id=bb onclick="validate()" disabled> <br>
+
+</form>
+</center>
+</body>
+</html>
