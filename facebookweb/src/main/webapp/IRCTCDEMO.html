@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script>
+function validate(){
+	
+	   var v=document.getElementById("nn").value;
+	   
+	   var x=new XMLHttpRequest();
+	   
+	   x.open("POST","IRCTC.jsp?city="+v,true);
+	   
+	   x.send();
+	   
+	   x.onreadystatechange=function(){
+		   
+		   if(x.readyState==4){
+			   
+			   var vv=x.responseText;
+			   //alert(vv);
+			   document.getElementById("rr").innerHTML=vv;
+		       }
+	       }
+}
+</script>
+</head>
+<body>
+
+
+<form method="post" action="">
+	Source: <input type=text id="nn" onkeyup="validate()"> <div id="rr"></div>
+</form>
+</body>
+</html>

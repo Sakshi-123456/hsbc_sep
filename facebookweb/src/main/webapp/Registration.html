@@ -28,46 +28,137 @@ function captchavalidate()
 }
 function validatePassword()
 {
-	var v1=document.getElementById("n5").value;
-	var v2=v1.length;
-	if(v2==4)
+	var v1=document.getElementById("n2").value;
+
+	//var v2=v1.length;
+	if(v1.length<4)
 		{
-		alert("Your password is weak");
+		document.getElementById("rr").innerHTML="<font color=red> password should not be less than 4 character </font>";
 		}
-	else if(v2>6 && v2<8)
+     if(v1.length>=4 && v1.length<6)
 		{
-		alert("Your password is moderate");
+		document.getElementById("rr").innerHTML="<font color=brown> weak </font>";
 		}
-	else if(v2>8)
+	 if(v1.length>=6 && v1.length<8)
 		{
-		alert("Your password is strong");
+		document.getElementById("rr").innerHTML="<font color=pink> moderate </font>";
 		}
-	else
+	if(v1.length>=8)
 		{
-		
+		document.getElementById("rr").innerHTML="<font color=green> strong </font>";
 		}
 }
-var s = document.getElementById('s');
+//pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+/*var s = document.getElementById('s');
 var options = [India,Austrilia];
 
 
 options.forEach(function(element,key) {
     s[key] = new Option(element,key);
 });
+*/
+function validateEmail()
+{
+	 var v=document.getElementById("n3").value;
+	 
+	 //step 1 how to get XHR
+	 var x=new XMLHttpRequest();
+	 
+	 // step 2 how XHR will open connection with server
+	 x.open("GET","emailValidate.jsp?email="+v,true); //true=asynschrnous, false=synchronous
+	 
+	 //step 3 how XHR will send request
+	 x.send();
+	 
+	 // step 4 how XHR will get response from server
+	 //state={0,1,2,3,4}
+	 //0-no connection
+	 //1-establish connection
+	 //2-client sends request
+	 //3-server responds
+	 //4-response completed
+	 // one state to other=> event
+	 x.onreadystatechange=function(){
+		 if(x.readyState==4){
+			 var vv=x.responseText;
+			 document.getElementById("zz").innerHTML=vv; 
+		 }
+	 }
+}
+function generateAddress()
+{
+	var v=document.getElementById("n4").value;
+	 
+	 //step 1 how to get XHR
+	 var x=new XMLHttpRequest();
+	 
+	 // step 2 how XHR will open connection with server
+	 x.open("GET","generateAddress.jsp?address="+v,true); //true=asynschrnous, false=synchronous
+	 
+	 //step 3 how XHR will send request
+	 x.send();
+	 
+	 // step 4 how XHR will get response from server
+	 //state={0,1,2,3,4}
+	 //0-no connection
+	 //1-establish connection
+	 //2-client sends request
+	 //3-server responds
+	 //4-response completed
+	 // one state to other=> event
+	 x.onreadystatechange=function(){
+		 if(x.readyState==4){
+			 var vv=x.responseText;
+			 document.getElementById("zz").innerHTML=vv; 
+		 }
+	 }
+	}
+	
+	function generateCountry(){
+		//var v=document.getElementById("country").value;
+		 
+		 //step 1 how to get XHR
+		 var x=new XMLHttpRequest();
+		 
+		 // step 2 how XHR will open connection with server
+		 x.open("GET","generateCountry.jsp",true); //true=asynschrnous, false=synchronous
+		 
+		 //step 3 how XHR will send request
+		 x.send();
+		 
+		 // step 4 how XHR will get response from server
+		 //state={0,1,2,3,4}
+		 //0-no connection
+		 //1-establish connection
+		 //2-client sends request
+		 //3-server responds
+		 //4-response completed
+		 // one state to other=> event
+		 x.onreadystatechange=function(){
+			 if(x.readyState==4){
+				 var vv=x.responseText;
+				 //document.getElementById("zz").innerHTML=vv; 
+			 }
+		 }
+	}
 </script>
 </head>
-<body>
+<body onload="generateCountry()">
 <p align="center">Registration Page</p>
 <center>
-<form action="RegistrationServlet" method="">
+<form action="RegisterServlet.jsp" method="">
 	Name : <input type=text name=name id="n1" class="nn" placeholder="Your name" required pattern="^[A-Za-z]\w*$"> <br><br>
-	Password : <input type=password name=password id="n2" placeholder="Your password"required pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" onclick="validatePassword()"> <br><br>
-	Email : <input type=email name=email id="n3"placeholder="Your email" required> <br><br>
+	
+	Password : <input type=password name=password id="n2" placeholder="Your password" required onkeyup="validatePassword()" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"> <br><br>
+	            <div id="rr"></div><br>
+	Email : <input type=email name=email id="n3" placeholder="Your email" onkeyup="validateEmail()" required > <div id="zz"></div>
+	<br>
+	
 	Phone number : <input type=phone name=phone id="n5" placeholder="Your Phone number"required pattern="[0-9]{10}"> <br><br>
-	Address : <input type=text name=address id="n4" required  placeholder="Your Address" onBlur="generateCaptcha()"> <br><br>
+	Address : <input type=text name=address id="n4" required  placeholder="Your Address"  onBlur="generateCaptcha()"> <br><br>
 	
-	
-	Please select country<select id="country" name="country">
+	<div id="cc"></div>
+	<!--  Please select country<select id="country" name="country" onkeyup="generateCountry()">
 	Please select country
 	  <option>India</option>
      <option>Australia</option>
@@ -78,7 +169,7 @@ options.forEach(function(element,key) {
      <option>Mitchell</option>
      <option>Euroa</option>
     Please select state</select><br>
-	<br>
+	<br-->
 	<br>
 	<div id="result"></div>
 	

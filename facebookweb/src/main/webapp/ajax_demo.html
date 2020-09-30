@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script type="text/javascript">
+
+     function validate()
+     {
+    	 var v=document.getElementById("nn").value;
+    	 
+    	 //step 1 how to get XHR
+    	 var x=new XMLHttpRequest();
+    	 
+    	 // step 2 how XHR will open connection with server
+    	 x.open("GET","my.jsp?name="+v,true); //true=asynschrnous, false=synchronous
+    	 
+    	 //step 3 how XHR will send request
+    	 x.send();
+    	 
+    	 // step 4 how XHR will get response from server
+    	 //state={0,1,2,3,4}
+    	 //0-no connection
+    	 //1-establish connection
+    	 //2-client sends request
+    	 //3-server responds
+    	 //4-response completed
+    	 // one state to other=> event
+    	 x.onreadystatechange=function(){
+    		 if(x.readyState==4){
+    			 var vv=x.responseText;
+    			 document.getElementById("rr").innerHTML=vv; 
+    		 }
+    	 }
+     }
+     
+	function loadcountry(){
+		
+		var x=new XMLHttpRequest();
+		//step 2 how xhr will open connection with server
+		x.open("GET","country.jsp",true);
+		
+		//step 3 how xhr will send request
+		x.send();
+		
+		//step 4 how xhr will get response from server
+		//state={0,1,2,3,4}
+		
+		x.onreadystatechange=function(){
+			if(x.readyState==4){
+				var vv=x.responseText;
+				document.getElementById("cou").innerHTML=vv;
+				
+			}
+		}
+		
+	}
+ </script>    
+</head>
+<body onload="loadcountry()">
+<form method="post" action="">
+  Name:<input type=text name=name id="nn" onkeyup="validate()"><div id="rr"></div>
+  <br> <div id="cou"></div>
+  </form>
+</body>
+</html>
